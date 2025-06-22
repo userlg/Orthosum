@@ -26,7 +26,7 @@ class UserSanctumRouteTest extends TestCase
 
     public function test_guest_cannot_access_user_endpoint(): void
     {
-        $response = $this->getJson('/api/v1/user');
+        $response = $this->getJson('api/v1/user');
 
         $response->assertStatus(401);
     }

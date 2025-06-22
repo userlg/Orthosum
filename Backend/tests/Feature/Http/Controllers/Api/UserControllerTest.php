@@ -27,7 +27,7 @@ class UserControllerTest extends TestCase
     {
         User::factory()->count(5)->create();
 
-        $response = $this->getJson('/api/v1/users/get_all_users');
+        $response = $this->getJson('/api/v1/users/get_all');
 
         $response->assertStatus(200)
             ->assertJsonCount(5, 'users');
