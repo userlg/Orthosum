@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\JsonResponse;
+use App\Http\Resources\PingResource;
 use OpenApi\Annotations as OA;
 
 /**
@@ -27,8 +27,8 @@ class PingController extends Controller
      *     )
      * )
      */
-    public function ping(): JsonResponse
+    public function ping(): PingResource
     {
-        return response()->json(['message' => 'pong'], 200);
+        return new PingResource(null);
     }
 }

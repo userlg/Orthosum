@@ -15,8 +15,8 @@ class PingControllerTest extends TestCase
 
         $response->assertStatus(200);
 
-        $response->assertJson([
+        $response->assertJson(['data' => [
             'message' => 'pong',
-        ]);
+        ]]);
     }
 }

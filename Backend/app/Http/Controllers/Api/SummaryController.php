@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SummaryCollection;
 use App\Models\Summary;
 
 class SummaryController extends Controller
 {
-    public function getSummaries()
+    public function getSummaries(): SummaryCollection
     {
-        $summaries = Summary::all();
-
-        return response()->json($summaries);
+        return new SummaryCollection(Summary::all());
     }
 }
