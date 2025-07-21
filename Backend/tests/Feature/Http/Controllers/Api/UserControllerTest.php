@@ -10,13 +10,19 @@ class UserControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected string $endpoint = '/api/v1/users/register';
+
     public function test_register_user_works_properly(): void
     {
-        $response = $this->postJson('/api/v1/users/register', [
-            'name' => 'Jhon',
-            'email' => 'jhondoe@example.com',
-            'password' => 'password',
-        ]);
+        $payload = [
+            'name' => 'Nolan',
+            'email' => 'jhonnolan@fakemail.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+        ];
+
+
+        $response = $this->postJson($this->endpoint, $payload);
 
         $response->assertStatus(201);
 
@@ -30,7 +36,7 @@ class UserControllerTest extends TestCase
         $response = $this->getJson('/api/v1/users/get_all');
 
         $response->assertStatus(200)
-            ->assertJsonCount(5, 'users');
+            ->assertJsonCount(5, 'data');
 
         $this->assertDatabaseCount('users', 5);
     }

@@ -4,27 +4,29 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\RegisterUserRequest;
+use App\Http\Resources\UserResource;
+use App\Http\Resources\Collection\UserCollection;
 
 class UserController extends Controller
 {
-    public function register(Request $request): JsonResponse
+    public function register(RegisterUserRequest $request): UserResource
     {
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($request->password),
         ]);
 
-        return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);
+        return new UserResource($user);
     }
 
-    public function getUsers(): JsonResponse
+    public function getUsers(): UserCollection
     {
         $users = User::all();
 
-        return response()->json(['users' => $users], 200);
+        return new UserCollection($users);
     }
 }
