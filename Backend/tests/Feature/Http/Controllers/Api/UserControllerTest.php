@@ -21,7 +21,6 @@ class UserControllerTest extends TestCase
             'password_confirmation' => 'password123',
         ];
 
-
         $response = $this->postJson($this->endpoint, $payload);
 
         $response->assertStatus(201);

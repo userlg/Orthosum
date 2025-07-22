@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterUserRequest;
+use App\Http\Resources\Collections\UserCollection;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\RegisterUserRequest;
-use App\Http\Resources\UserResource;
-use App\Http\Resources\Collection\UserCollection;
 
 class UserController extends Controller
 {
@@ -25,8 +25,7 @@ class UserController extends Controller
 
     public function getUsers(): UserCollection
     {
-        $users = User::all();
 
-        return new UserCollection($users);
+        return new UserCollection(User::all());
     }
 }

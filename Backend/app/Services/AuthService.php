@@ -13,7 +13,7 @@ class AuthService
         }
 
         $user = Auth::user();
-        
+
         $token = $user->createToken('api-token')->plainTextToken;
 
         return [
