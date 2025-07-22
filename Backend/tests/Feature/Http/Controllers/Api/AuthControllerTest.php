@@ -65,7 +65,6 @@ class AuthControllerTest extends TestCase
         $response = $this->postJson('/api/v1/logout');
 
         $response->assertStatus(401);
-
     }
 
     public function test_authenticated_user_can_logout()

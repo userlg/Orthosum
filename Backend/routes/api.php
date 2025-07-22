@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\SummaryController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -17,6 +18,8 @@ Route::prefix('v1')->group(function () {
         Route::post('/users/register', 'register');
         Route::get('/users/get_all', 'getUsers');
     });
+
+    Route::post('/upload_image', [ImageController::class, 'store']);
 
     Route::middleware('auth:sanctum')->group(function () {
 
