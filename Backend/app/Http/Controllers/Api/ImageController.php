@@ -4,22 +4,21 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreImageRequest;
+use App\Services\StoreService;
 use Illuminate\Http\JsonResponse;
 
 class ImageController extends Controller
 {
-    public function store(StoreImageRequest $request): JsonResponse
+    public function store(StoreImageRequest $request, StoreService $storeService): JsonResponse
     {
+        $file = $request->file('image');
 
-        $path = $request->file('image')->store('images', 'public');
+        $tempPath = $storeService->store($file);
 
         return response()->json([
             'success' => true,
-            'message' => 'File uploaded successfully',
-            'data' => [
-                'file_name' => basename($path),
-                'storage_path' => str_replace('\\', '', $path),
-            ],
-        ], 201, [], JSON_UNESCAPED_SLASHES);
+            'message' => 'Imagen enviada correctamente. El procesamiento está en cola.',
+            'temp_path' => $tempPath,
+        ], 201);
     }
 }
