@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class StoreService
 {
-    public function store(UploadedFile $file): string
+    public function store(UploadedFile $file, int $width, int $height): string
     {
 
         $filename = Str::random(40).'.'.$file->getClientOriginalExtension();
@@ -18,7 +18,7 @@ class StoreService
 
         Storage::disk('local')->put($path, file_get_contents($file));
 
-        $this->transformImageFile($path, 300, 300);
+        $this->transformImageFile($path, $width, $height);
 
         return $path;
     }

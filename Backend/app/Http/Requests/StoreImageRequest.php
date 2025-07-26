@@ -23,6 +23,8 @@ class StoreImageRequest extends FormRequest
     {
         return [
             'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'width' => 'required|integer|min:1|max:10000|',
+            'height' => 'required|integer|min:1|max:10000',
         ];
     }
 }

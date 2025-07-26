@@ -13,7 +13,7 @@ class ImageController extends Controller
     {
         $file = $request->file('image');
 
-        $tempPath = $storeService->store($file);
+        $storeService->store($file, $request->width, $request->height);
 
         return response()->json([
             'success' => true,
