@@ -17,8 +17,6 @@ class ImageController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Imagen enviada correctamente. El procesamiento está en cola.',
-            'temp_path' => $tempPath,
         ], 201);
     }
 }

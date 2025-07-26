@@ -15,45 +15,33 @@ class ConvertImageToPng implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected string $tempPath;
+    public string $tempPath;
 
-    protected string $extension;
+    public int $width;
 
-    protected int $width;
+    public int $height;
 
-    protected int $height;
-
-    public function __construct(string $tempPath, string $extension, int $width, int $height)
+    public function __construct(string $tempPath, int $width, int $height)
     {
         $this->tempPath = $tempPath;
-        $this->extension = $extension;
         $this->width = $width;
         $this->height = $height;
     }
 
     public function handle(): void
     {
-        $absolutePath = storage_path('app/'.$this->tempPath);
 
-        if (! file_exists($absolutePath)) {
-            logger()->error("Temp file not found: {$absolutePath}");
+        $absolutePath = Storage::get($this->tempPath);
 
-            return;
-        }
-
-        $image = Image::read($absolutePath)
-            ->resize($this->width, $this->height);
+        $image = Image::read($absolutePath)->resize($this->width, $this->height);
 
         $filename = Str::random(40).'.png';
-        $savePath = 'images/'.$filename;
 
-        Storage::disk('public')->put(
-            $savePath,
+        Storage::disk('local')->put(
+            'images/'.$filename,
             $image->encodeByExtension('png', 90)
         );
 
-        logger()->info("Imagen procesada y guardada en: storage/app/public/{$savePath}");
-
-        @unlink($absolutePath);
+        Storage::disk('local')->deleteDirectory('temp');
     }
 }
